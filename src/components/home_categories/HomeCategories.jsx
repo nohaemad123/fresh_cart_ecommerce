@@ -1,0 +1,50 @@
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
+import { Link } from "react-router";
+import Loading from "../loading/Loading";
+import { categoriesContext } from "../../context/Categories.context";
+
+export default function HomeCategories() {
+  const { categories, error, isError, isLoading } =
+    useContext(categoriesContext);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  return (
+    <>
+      <div className="py-10 bg-mainColor">
+        <div className="container">
+          <div className="flex justify-between">
+            <h2 className="text-2xl font-bold">Shop by category</h2>
+            <Link
+              to=""
+              className="flex flex-col lg:flex-row items-center text-primary-600"
+            >
+              View all categories{" "}
+              <FontAwesomeIcon icon={faArrowRight} className="ms-2" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-2  lg:grid-cols-6 gap-5 mt-10">
+            {categories &&
+              categories.map((category) => (
+                <div
+                  key={category._id}
+                  className="bg-white shadow-sm hover:shadow-lg transition-shadow duration-500 py-3 px-5 rounded-lg flex flex-col items-center justify-center space-y-3"
+                >
+                  <img
+                    src={category.image}
+                    alt=""
+                    className="size-15 rounded-full object-cover"
+                  />
+                  <h4 className="">{category.name}</h4>
+                </div>
+              ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
