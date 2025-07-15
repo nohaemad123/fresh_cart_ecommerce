@@ -302,7 +302,7 @@ export default function Navbar() {
                   }}
                   aria-current="page"
                 >
-                  categories
+                  Categories
                 </NavLink>
               </li>
               <li>

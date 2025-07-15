@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { categoriesContext } from "../../context/Categories.context";
-import { useFormik } from "formik";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
 import { brandsContext } from "../../context/Brands.context";
-import ProductRating from "../../components/product_rating/ProductRating";
-import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import { productsContext } from "../../context/Products.context";
 import { useSearchParams } from "react-router";
+import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
+import ProductCard from "../../components/product_card/ProductCard";
+import ListProductCard from "../../components/list_product_card/ListProductCard";
+import SidebarSearch from "../../components/sidebar_search/SidebarSearch";
+import Loading from "../../components/loading/Loading";
+import NoProducts from "../../components/no_products/NoProducts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -15,29 +16,36 @@ import {
   faGrip,
   faList,
 } from "@fortawesome/free-solid-svg-icons";
-import ProductCard from "../../components/product_card/ProductCard";
-import Loading from "../../components/loading/Loading";
-import ListProductCard from "../../components/list_product_card/ListProductCard";
-import SidebarSearch from "../../components/sidebar_search/SidebarSearch";
-import NoProducts from "../../components/no_products/NoProducts";
 
 export default function SearchProducts() {
   const { categories } = useContext(categoriesContext);
   const { brands } = useContext(brandsContext);
-  const { filteredProducts, getAllProductsFilter, isLoading, results } =
-    useContext(productsContext);
+  const {
+    filteredProducts,
+    getAllProductsFilter,
+    resetFilteredProducts,
+    isLoading,
+    results,
+  } = useContext(productsContext);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [view, setView] = useState("grid");
-  console.log(results);
-  const categoryName = categories?.length
-    ? categories.find((c) => c._id === searchParams.get("category"))?.name
-    : "";
+  const [categoryName, setCategoryName] = useState("");
+  const [brandName, setBrandName] = useState("");
 
-  const brandName = brands?.length
-    ? brands.find((b) => b._id === searchParams.get("brand"))?.name
-    : "";
+  useEffect(() => {
+    if (categories?.length > 0 && searchParams.get("category")) {
+      const found = categories.find(
+        (c) => c._id === searchParams.get("category")
+      );
+      setCategoryName(found?.name || "");
+    }
 
-  console.log("products", filteredProducts);
+    if (brands?.length > 0 && searchParams.get("brand")) {
+      const found = brands.find((b) => b._id === searchParams.get("brand"));
+      setBrandName(found?.name || "");
+    }
+  }, [categories, brands, searchParams]);
 
   useEffect(() => {
     const query = Object.fromEntries(searchParams.entries());
@@ -51,10 +59,11 @@ export default function SearchProducts() {
       return;
     }
 
-    getAllProductsFilter(query);
+    resetFilteredProducts(); // ✅ امسح البيانات القديمة
+    getAllProductsFilter(query); // ✅ ثم fetch الجديدة
   }, [searchParams]);
 
-  if (isLoading) return <Loading />;
+  if (isLoading || filteredProducts === null) return <Loading />;
 
   return (
     <>
@@ -68,10 +77,10 @@ export default function SearchProducts() {
                 <p className="ms-2 me-2">with category:</p>{" "}
                 <span className="text-primary-600">{categoryName}</span>
               </>
-            )}{" "}
+            )}
             {searchParams.get("brand") && (
               <>
-                <p className="ms-2 me-2"> and with brand:</p>{" "}
+                <p className="ms-2 me-2">and with brand:</p>{" "}
                 <span className="text-primary-600">{brandName}</span>
               </>
             )}
@@ -81,10 +90,10 @@ export default function SearchProducts() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-12 mb-2 gap-x-10 mt-5">
-            <div className="md:col-span-3 ">
+            <div className="md:col-span-3">
               <SidebarSearch />
             </div>
-            <div className="md:col-span-9 ">
+            <div className="md:col-span-9">
               {!filteredProducts.length && searchParams.get("category") && (
                 <NoProducts name={categoryName} />
               )}
@@ -100,20 +109,20 @@ export default function SearchProducts() {
                         <button
                           onClick={() => setView("grid")}
                           className={`${
-                            view == "grid"
+                            view === "grid"
                               ? "bg-primary-600 text-white"
                               : "bg-gray-200"
-                          } w-[35px] h-[40px] cursor-pointer bg-gray-200 text-lg rounded-md`}
+                          } w-[35px] h-[40px] text-lg rounded-md`}
                         >
                           <FontAwesomeIcon icon={faGrip} />
                         </button>
                         <button
                           onClick={() => setView("list")}
                           className={`${
-                            view == "list"
+                            view === "list"
                               ? "bg-primary-600 text-white"
                               : "bg-gray-200"
-                          } w-[35px] h-[40px] cursor-pointer bg-gray-200 text-lg rounded-md`}
+                          } w-[35px] h-[40px] text-lg rounded-md`}
                         >
                           <FontAwesomeIcon icon={faList} />
                         </button>
@@ -127,24 +136,25 @@ export default function SearchProducts() {
                       </div>
                     </div>
                   </div>
-                  {view == "grid" && (
+
+                  {view === "grid" ? (
                     <div className="grid grid-cols-3 gap-10 mt-10">
-                      {filteredProducts &&
-                        filteredProducts.map((product) => (
-                          <ProductCard productInfo={product} />
-                        ))}
+                      {filteredProducts.map((product) => (
+                        <ProductCard key={product._id} productInfo={product} />
+                      ))}
                     </div>
-                  )}
-
-                  {view == "list" && (
+                  ) : (
                     <div className="mt-5">
-                      {filteredProducts &&
-                        filteredProducts.map((product) => (
-                          <ListProductCard productInfo={product} />
-                        ))}
+                      {filteredProducts.map((product) => (
+                        <ListProductCard
+                          key={product._id}
+                          productInfo={product}
+                        />
+                      ))}
                     </div>
                   )}
 
+                  {/* Pagination */}
                   <div className="flex justify-center items-center mt-10">
                     <ul className="flex gap-x-3">
                       <li

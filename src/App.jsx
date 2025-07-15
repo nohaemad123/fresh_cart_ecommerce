@@ -24,6 +24,7 @@ import ResetPassword from "./pages/reset_password/ResetPassword";
 import SearchProducts from "./pages/search_products/SearchProducts";
 import BrandsProvider from "./context/Brands.context";
 import Categories from "./pages/categories/Categories";
+import SubCategoriesProvider from "./context/subCategories.context";
 
 function App() {
   let routes = createBrowserRouter([
@@ -118,15 +119,17 @@ function App() {
           <CartProvider>
             <ProductsProvider>
               <CategoriesProvider>
-                <BrandsProvider>
-                  <RouterProvider router={routes} />
-                  <ToastContainer
-                    autoClose={3000}
-                    closeButton={false}
-                    closeOnClick={true}
-                    transition={Slide}
-                  />
-                </BrandsProvider>
+                <SubCategoriesProvider>
+                  <BrandsProvider>
+                    <RouterProvider router={routes} />
+                    <ToastContainer
+                      autoClose={3000}
+                      closeButton={false}
+                      closeOnClick={true}
+                      transition={Slide}
+                    />
+                  </BrandsProvider>
+                </SubCategoriesProvider>
               </CategoriesProvider>
             </ProductsProvider>
           </CartProvider>

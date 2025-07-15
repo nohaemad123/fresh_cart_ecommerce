@@ -5,12 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { categoriesContext } from "../../context/Categories.context";
 import CategoryCard from "../../components/category_card/CategoryCard";
 import Loading from "../../components/loading/Loading";
+import ListCategoryCard from "../../components/list_category_card/ListCategoryCard";
+import Subcategories from "../../components/subcategories/Subcategories";
+import FeaturedCategories from "../../components/featured_categories/FeaturedCategories";
+import NewsLetter from "../../components/newsletter/NewsLetter";
+import SeasonalCategories from "../../components/seasonal_categories/SeasonalCategories";
 
 export default function Categories() {
   const [view, setView] = useState("grid");
-  const { categories, isLoading } = useContext(categoriesContext);
+  const { categories, isCategoriesLoading } = useContext(categoriesContext);
 
-  if (isLoading) return <Loading />;
+  if (isCategoriesLoading) return <Loading />;
   return (
     <>
       <BreadCrumb thirdLink={"categories"} />
@@ -50,16 +55,28 @@ export default function Categories() {
       </div>
       <div className="p-10 bg-mainColor">
         <div className="container">
-          <div className="grid grid-cols-3 gap-x-10 gap-y-5">
-            {categories &&
-              categories.map((category) => (
-                <div className="rounded-md">
-                  <CategoryCard categoryInfo={category} />
-                </div>
+          {view === "grid" ? (
+            <div className="grid grid-cols-3 gap-x-10 gap-y-5">
+              {categories &&
+                categories.map((category) => (
+                  <div className="rounded-md">
+                    <CategoryCard categoryInfo={category} />
+                  </div>
+                ))}
+            </div>
+          ) : (
+            <div className="mt-5">
+              {categories.map((category) => (
+                <ListCategoryCard key={category._id} categoryInfo={category} />
               ))}
-          </div>
+            </div>
+          )}
         </div>
       </div>
+      <Subcategories />
+      <FeaturedCategories />
+      <SeasonalCategories />
+      <NewsLetter />
     </>
   );
 }

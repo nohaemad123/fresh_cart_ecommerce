@@ -1,12 +1,11 @@
 import { apiClient } from "./api-client";
 
-export async function getAllCategoriesApi() {
+export async function getAllCategoriesApi({ limit } = {}) {
   try {
     const options = {
       method: "Get",
-      url: "categories",
+      url: `/categories?${limit ? `limit=${limit}` : ""}`,
     };
-
     const response = await apiClient.request(options);
     return response;
   } catch (error) {
@@ -19,6 +18,20 @@ export async function getSubCategoryByCategoryApi(category_id) {
     const options = {
       method: "Get",
       url: `categories/${category_id}/subcategories`,
+    };
+
+    const response = await apiClient.request(options);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getAllSubCategoriesApi() {
+  try {
+    const options = {
+      method: "Get",
+      url: `subcategories`,
     };
 
     const response = await apiClient.request(options);

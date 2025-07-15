@@ -1,3 +1,4 @@
+// src/context/Products.context.js
 import { createContext, useEffect, useState } from "react";
 import { getAllProductsApi } from "../services/products-service";
 
@@ -10,12 +11,13 @@ export default function ProductsProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(false);
+
   async function getAllProducts() {
     try {
       const response = await getAllProductsApi();
       if (response.success) {
-        setIsLoading(false);
         setProducts(response.data.data);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -27,11 +29,12 @@ export default function ProductsProvider({ children }) {
 
   async function getAllProductsFilter(params = {}) {
     try {
+      setIsLoading(true);
       const response = await getAllProductsApi(params);
       if (response.success) {
-        setIsLoading(false);
         setFilteredProducts(response.data.data);
         setResults(response.data.metadata);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -40,6 +43,10 @@ export default function ProductsProvider({ children }) {
       setError(error);
     }
   }
+
+  const resetFilteredProducts = () => {
+    setFilteredProducts(null); // ✅ مسح المنتجات القديمة
+  };
 
   useEffect(() => {
     getAllProducts();
@@ -55,7 +62,7 @@ export default function ProductsProvider({ children }) {
         isError,
         filteredProducts,
         getAllProducts,
-
+        resetFilteredProducts,
         getAllProductsFilter,
       }}
     >

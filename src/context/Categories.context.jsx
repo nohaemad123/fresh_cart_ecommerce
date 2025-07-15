@@ -1,21 +1,18 @@
 import { createContext, useEffect, useState } from "react";
-import {
-  getAllCategoriesApi,
-  getSubCategoryByCategoryApi,
-} from "../services/categories-service";
+import { getAllCategoriesApi } from "../services/categories-service";
 
-export const categoriesContext = createContext(null); // لاحظ أول حرف كابيتال
+export const categoriesContext = createContext(null);
 
 export default function CategoriesProvider({ children }) {
   const [categories, setCategories] = useState(null);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(false);
 
   async function getAllCategories() {
     try {
-      setIsLoading(true);
+      setIsCategoriesLoading(true);
       const response = await getAllCategoriesApi();
       if (response.success) {
         setCategories(response.data.data);
@@ -24,7 +21,7 @@ export default function CategoriesProvider({ children }) {
       setIsError(true);
       setError(error);
     } finally {
-      setIsLoading(false);
+      setIsCategoriesLoading(false);
     }
   }
 
@@ -34,7 +31,7 @@ export default function CategoriesProvider({ children }) {
 
   return (
     <categoriesContext.Provider
-      value={{ categories, isLoading, isError, error }}
+      value={{ categories, isCategoriesLoading, isError, error }}
     >
       {children}
     </categoriesContext.Provider>
