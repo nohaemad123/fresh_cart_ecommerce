@@ -5,6 +5,7 @@ export async function getAllProductsApi({
   keyword,
   priceGreaterThan,
   priceLessThan,
+  limit,
   sortedBy,
   category,
   brand,
@@ -18,7 +19,7 @@ export async function getAllProductsApi({
         priceLessThan ? `&price[lte]=${priceLessThan}` : ""
       }${sortedBy ? `&sorted=${sortedBy}` : ""}${
         category ? `&category[in]=${category}` : ""
-      }${brand ? `&brand=${brand}` : ""}`,
+      }${brand ? `&brand=${brand}` : ""}${limit ? `&limit=${limit}` : ""}`,
     };
 
     const response = await apiClient.request(options);
