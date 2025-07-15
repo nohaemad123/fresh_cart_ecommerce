@@ -25,6 +25,7 @@ import SearchProducts from "./pages/search_products/SearchProducts";
 import BrandsProvider from "./context/Brands.context";
 import Categories from "./pages/categories/Categories";
 import SubCategoriesProvider from "./context/subCategories.context";
+import Brands from "./pages/brands/Brands";
 
 function App() {
   let routes = createBrowserRouter([
@@ -65,6 +66,10 @@ function App() {
         {
           path: "/categories",
           element: <Categories />,
+        },
+        {
+          path: "/brands",
+          element: <Brands />,
         },
         {
           path: "/cart",

@@ -306,9 +306,20 @@ export default function Navbar() {
                 </NavLink>
               </li>
               <li>
-                <Link aria-current="page" className="block mt-2">
+                <NavLink
+                  to="/brands"
+                  className={({ isActive }) => {
+                    return `${
+                      isActive
+                        ? " text-primary-600 flex flex-col mt-2"
+                        : "text-black flex flex-col mt-2"
+                    } 
+                    `;
+                  }}
+                  aria-current="page"
+                >
                   Brands
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </div>
