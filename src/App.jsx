@@ -23,6 +23,7 @@ import VerifyEmail from "./pages/verify_email/VerfifyEmail";
 import ResetPassword from "./pages/reset_password/ResetPassword";
 import SearchProducts from "./pages/search_products/SearchProducts";
 import BrandsProvider from "./context/Brands.context";
+import Categories from "./pages/categories/Categories";
 
 function App() {
   let routes = createBrowserRouter([
@@ -59,6 +60,10 @@ function App() {
         {
           path: "/search-products",
           element: <SearchProducts />,
+        },
+        {
+          path: "/categories",
+          element: <Categories />,
         },
         {
           path: "/cart",

@@ -28,9 +28,10 @@ export default function HomeDeals() {
     return <Loading />;
   }
 
-  const deals = products
+  const deals = (products || [])
     .filter((product) => product.priceAfterDiscount)
     .slice(0, 4);
+
   return (
     <>
       <div className="py-10 ">

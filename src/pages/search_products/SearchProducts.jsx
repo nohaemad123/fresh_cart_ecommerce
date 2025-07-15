@@ -9,19 +9,26 @@ import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import { productsContext } from "../../context/Products.context";
 import { useSearchParams } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGrip, faList } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faChevronRight,
+  faGrip,
+  faList,
+} from "@fortawesome/free-solid-svg-icons";
 import ProductCard from "../../components/product_card/ProductCard";
 import Loading from "../../components/loading/Loading";
 import ListProductCard from "../../components/list_product_card/ListProductCard";
+import SidebarSearch from "../../components/sidebar_search/SidebarSearch";
+import NoProducts from "../../components/no_products/NoProducts";
 
 export default function SearchProducts() {
   const { categories } = useContext(categoriesContext);
   const { brands } = useContext(brandsContext);
-  const { products, getAllProductsFilter, isLoading } =
+  const { filteredProducts, getAllProductsFilter, isLoading, results } =
     useContext(productsContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const [view, setView] = useState("grid");
-
+  console.log(results);
   const categoryName = categories?.length
     ? categories.find((c) => c._id === searchParams.get("category"))?.name
     : "";
@@ -30,17 +37,20 @@ export default function SearchProducts() {
     ? brands.find((b) => b._id === searchParams.get("brand"))?.name
     : "";
 
-  console.log("products", products);
+  console.log("products", filteredProducts);
 
   useEffect(() => {
-    const hasParams = searchParams.get("page") && searchParams.get("limit");
+    const query = Object.fromEntries(searchParams.entries());
 
-    if (!hasParams) {
-      setSearchParams({ page: 1, limit: 9 });
+    if (!query.page || !query.limit) {
+      setSearchParams({
+        ...query,
+        page: query.page || 1,
+        limit: query.limit || 9,
+      });
       return;
     }
 
-    const query = Object.fromEntries(searchParams.entries());
     getAllProductsFilter(query);
   }, [searchParams]);
 
@@ -67,238 +77,132 @@ export default function SearchProducts() {
             )}
           </h3>
           <p className="text-gray-500 mt-2">
-            We found {products?.length} products for you
+            We found {filteredProducts?.length || 0} products for you
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-12 mb-2 gap-x-10 mt-5">
             <div className="md:col-span-3 ">
-              <div className="bg-white p-5 rounded-md">
-                <form>
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2">Categories</h3>
-                    {categories &&
-                      categories.map((cat, index) => (
-                        <div key={index} className="flex flex-col gap-y-4">
-                          <label className="flex items-center space-x-2 mb-2 text-gray-700">
-                            <input
-                              type="checkbox"
-                              className="form-checkbox h-4 w-4 text-primary-600"
-                            />
-                            <span className="text-md">{cat.name}</span>
-                          </label>
-                        </div>
-                      ))}
-                  </div>
-
-                  <div className="mt-2 border-t border-gray-300 pt-2">
-                    <h3 className="text-lg font-semibold mb-2">Price range</h3>
-
-                    <Slider
-                      range
-                      min={5}
-                      max={75}
-                      allowCross={false}
-                      trackStyle={[{ backgroundColor: "#16a34a", height: 6 }]}
-                      handleStyle={[
-                        {
-                          borderColor: "#aaa",
-                          height: 18,
-                          width: 18,
-                          opacity: 1,
-                        },
-                        {
-                          borderColor: "#aaa",
-                          height: 18,
-                          width: 18,
-                          opacity: 1,
-                        },
-                      ]}
-                      railStyle={{ backgroundColor: "#e5e7eb", height: 6 }}
-                    />
-                    <div className="flex items-center justify-between text-sm text-gray-700 mt-2">
-                      <span className="border border-gray-400 px-3 py-1 rounded-md">
-                        5 EGP
-                      </span>
-                      <span>to</span>
-                      <span className="border border-gray-400 px-3 py-1 rounded-md">
-                        75 EGP
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="mt-2 border-t border-gray-300 pt-2">
-                    <h3 className="text-lg font-semibold mb-2">Brands</h3>
-                    {brands &&
-                      brands.map((brand, index) => (
-                        <div key={index} className="flex flex-col gap-y-4">
-                          <label className="flex items-center space-x-2 mb-2 text-gray-700">
-                            <input
-                              type="checkbox"
-                              className="form-checkbox h-4 w-4 text-primary-600"
-                            />
-                            <span className="text-md">{brand.name}</span>
-                          </label>
-                        </div>
-                      ))}
-                  </div>
-                  <div className="mt-2 border-t border-gray-300 pt-2">
-                    <h3 className="text-lg font-semibold mb-2">Ratings</h3>
-
-                    <label className="flex items-center space-x-2 mb-2 text-gray-700">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox h-4 w-4 text-primary-600"
-                      />
-                      <span className="text-md flex  gap-x-2">
-                        <ProductRating rating={5} /> (42)
-                      </span>
-                    </label>
-                    <label className="flex items-center space-x-2 mb-2 text-gray-700">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox h-4 w-4 text-primary-600"
-                      />
-                      <span className="text-md flex  gap-x-2">
-                        <ProductRating rating={5} /> (42)
-                      </span>
-                    </label>
-                    <label className="flex items-center space-x-2 mb-2 text-gray-700">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox h-4 w-4 text-primary-600"
-                      />
-                      <span className="text-md flex  gap-x-2">
-                        <ProductRating rating={5} /> (42)
-                      </span>
-                    </label>
-                  </div>
-                  <div className="mt-2 border-t border-gray-300 pt-2">
-                    <h3 className="text-lg font-semibold mb-2">Availability</h3>
-
-                    <label className="flex items-center space-x-2 mb-2 text-gray-700">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox h-4 w-4 text-primary-600"
-                      />
-                      <span className="text-md flex  gap-x-2">
-                        In stock (42)
-                      </span>
-                    </label>
-                    <label className="flex items-center space-x-2 mb-2 text-gray-700">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox h-4 w-4 text-primary-600"
-                      />
-                      <span className="text-md flex  gap-x-2">
-                        Out of stock (42)
-                      </span>
-                    </label>
-                  </div>
-                  <div className="mt-2 border-t border-gray-300 pt-2">
-                    <h3 className="text-lg font-semibold mb-2">
-                      Dietary preferences{" "}
-                    </h3>
-
-                    <label className="flex items-center space-x-2 mb-2 text-gray-700">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox h-4 w-4 text-primary-600"
-                      />
-                      <span className="text-md flex  gap-x-2">
-                        100% organic (42)
-                      </span>
-                    </label>
-                    <label className="flex items-center space-x-2 mb-2 text-gray-700">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox h-4 w-4 text-primary-600"
-                      />
-                      <span className="text-md flex  gap-x-2">Vegan (42)</span>
-                    </label>
-                    <label className="flex items-center space-x-2 mb-2 text-gray-700">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox h-4 w-4 text-primary-600"
-                      />
-                      <span className="text-md flex  gap-x-2">
-                        Gluten-free (42)
-                      </span>
-                    </label>
-                    <label className="flex items-center space-x-2 mb-2 text-gray-700">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox h-4 w-4 text-primary-600"
-                      />
-                      <span className="text-md flex  gap-x-2">
-                        Non-GMO (42)
-                      </span>
-                    </label>
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-3">
-                    <button
-                      type="submit"
-                      className="py-2 px-3 bg-primary-600 border-transparent cursor-pointer  text-sm font-semibold text-white text-center rounded-md"
-                    >
-                      Apply filters
-                    </button>
-                    <button className="py-2 px-3 border  border-primary-600  text-sm text-primary-600 font-semibold text-center rounded-md">
-                      Reset
-                    </button>
-                  </div>
-                </form>
-              </div>
+              <SidebarSearch />
             </div>
             <div className="md:col-span-9 ">
-              <div className="bg-white p-5 rounded-md">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-x-3">
-                    <h3 className="text-lg font-medium">View:</h3>
-                    <button
-                      onClick={() => setView("grid")}
-                      className={`${
-                        view == "grid"
-                          ? "bg-primary-600 text-white"
-                          : "bg-gray-200"
-                      } w-[35px] h-[40px] cursor-pointer bg-gray-200 text-lg rounded-md`}
-                    >
-                      <FontAwesomeIcon icon={faGrip} />
-                    </button>
-                    <button
-                      onClick={() => setView("list")}
-                      className={`${
-                        view == "list"
-                          ? "bg-primary-600 text-white"
-                          : "bg-gray-200"
-                      } w-[35px] h-[40px] cursor-pointer bg-gray-200 text-lg rounded-md`}
-                    >
-                      <FontAwesomeIcon icon={faList} />
-                    </button>
-                  </div>
-                  <div className="flex items-center gap-x-3">
-                    <h3 className="text-lg font-medium">Sorted by:</h3>
-                    <select className="form-control min-w-50">
-                      <option>Relevance</option>
-                      <option>Price</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              {view == "grid" && (
-                <div className="grid grid-cols-3 gap-10 mt-10">
-                  {products &&
-                    products.map((product) => (
-                      <ProductCard productInfo={product} />
-                    ))}
-                </div>
+              {!filteredProducts.length && searchParams.get("category") && (
+                <NoProducts name={categoryName} />
               )}
+              {!filteredProducts.length && searchParams.get("brand") && (
+                <NoProducts name={brandName} />
+              )}
+              {filteredProducts.length > 0 && (
+                <>
+                  <div className="bg-white p-5 rounded-md">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-x-3">
+                        <h3 className="text-lg font-medium">View:</h3>
+                        <button
+                          onClick={() => setView("grid")}
+                          className={`${
+                            view == "grid"
+                              ? "bg-primary-600 text-white"
+                              : "bg-gray-200"
+                          } w-[35px] h-[40px] cursor-pointer bg-gray-200 text-lg rounded-md`}
+                        >
+                          <FontAwesomeIcon icon={faGrip} />
+                        </button>
+                        <button
+                          onClick={() => setView("list")}
+                          className={`${
+                            view == "list"
+                              ? "bg-primary-600 text-white"
+                              : "bg-gray-200"
+                          } w-[35px] h-[40px] cursor-pointer bg-gray-200 text-lg rounded-md`}
+                        >
+                          <FontAwesomeIcon icon={faList} />
+                        </button>
+                      </div>
+                      <div className="flex items-center gap-x-3">
+                        <h3 className="text-lg font-medium">Sorted by:</h3>
+                        <select className="form-control min-w-50">
+                          <option>Relevance</option>
+                          <option>Price</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  {view == "grid" && (
+                    <div className="grid grid-cols-3 gap-10 mt-10">
+                      {filteredProducts &&
+                        filteredProducts.map((product) => (
+                          <ProductCard productInfo={product} />
+                        ))}
+                    </div>
+                  )}
 
-              {view == "list" && (
-                <div className="mt-5">
-                  {products &&
-                    products.map((product) => (
-                      <ListProductCard productInfo={product} />
-                    ))}
-                </div>
+                  {view == "list" && (
+                    <div className="mt-5">
+                      {filteredProducts &&
+                        filteredProducts.map((product) => (
+                          <ListProductCard productInfo={product} />
+                        ))}
+                    </div>
+                  )}
+
+                  <div className="flex justify-center items-center mt-10">
+                    <ul className="flex gap-x-3">
+                      <li
+                        onClick={() => {
+                          const current = +searchParams.get("page") || 1;
+                          if (current > 1) {
+                            setSearchParams({
+                              ...Object.fromEntries(searchParams.entries()),
+                              page: current - 1,
+                            });
+                          }
+                        }}
+                        className="cursor-pointer font-semibold text-sm size-7 border border-gray-300 flex justify-center items-center text-gray-600"
+                      >
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                      </li>
+
+                      {Number.isInteger(results?.numberOfPages) &&
+                        results.numberOfPages > 0 &&
+                        [...Array(results.numberOfPages).keys()].map((i) => {
+                          const page = i + 1;
+                          return (
+                            <li
+                              key={page}
+                              onClick={() =>
+                                setSearchParams({
+                                  ...Object.fromEntries(searchParams.entries()),
+                                  page,
+                                })
+                              }
+                              className={`cursor-pointer font-semibold text-sm size-7 border border-gray-300 flex justify-center items-center ${
+                                +searchParams.get("page") === page
+                                  ? "bg-primary-600 text-white"
+                                  : "text-gray-600"
+                              }`}
+                            >
+                              {page}
+                            </li>
+                          );
+                        })}
+
+                      <li
+                        onClick={() => {
+                          const current = +searchParams.get("page") || 1;
+                          if (current < results?.numberOfPages) {
+                            setSearchParams({
+                              ...Object.fromEntries(searchParams.entries()),
+                              page: current + 1,
+                            });
+                          }
+                        }}
+                        className="cursor-pointer font-semibold text-sm size-7 border border-gray-300 flex justify-center items-center text-gray-600"
+                      >
+                        <FontAwesomeIcon icon={faChevronRight} />
+                      </li>
+                    </ul>
+                  </div>
+                </>
               )}
             </div>
           </div>

@@ -15,6 +15,7 @@ import { Link } from "react-router";
 import { getAllCategoriesApi } from "../../services/categories-service";
 import Loading from "../../components/loading/Loading";
 import { categoriesContext } from "../../context/Categories.context";
+import error_404 from "../../assets/undraw_page-not-found_6wni.svg";
 
 export default function NotFound() {
   const { categories, error, isError, isLoading } =
@@ -30,14 +31,7 @@ export default function NotFound() {
       <div className="bg-mainColor py-15">
         <div className="container">
           <div className="flex flex-col justify-center items-center space-y-5">
-            <div className="relative h-auto">
-              <div className="after:absolute after:top-0 after:content-['404']   after:text-[150px] after:text-primary-200 after:font-bold">
-                <FontAwesomeIcon
-                  icon={faShoppingCart}
-                  className="text-6xl text-primary-600"
-                />
-              </div>
-            </div>
+            <img src={error_404} alt="" className="w-80" />
 
             <h3 className="text-3xl font-bold ">Oops! page not found</h3>
             <p className="text-gray-700 text-center ">

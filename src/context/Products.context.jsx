@@ -5,12 +5,14 @@ export const productsContext = createContext(null);
 
 export default function ProductsProvider({ children }) {
   const [products, setProducts] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState(null);
+  const [results, setResults] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(false);
   async function getAllProducts() {
     try {
-      const response = await getAllProductsApi(params);
+      const response = await getAllProductsApi();
       if (response.success) {
         setIsLoading(false);
         setProducts(response.data.data);
@@ -28,7 +30,8 @@ export default function ProductsProvider({ children }) {
       const response = await getAllProductsApi(params);
       if (response.success) {
         setIsLoading(false);
-        setProducts(response.data.data);
+        setFilteredProducts(response.data.data);
+        setResults(response.data.metadata);
       }
     } catch (error) {
       console.log(error);
@@ -47,9 +50,12 @@ export default function ProductsProvider({ children }) {
       value={{
         products,
         isLoading,
+        results,
         error,
         isError,
+        filteredProducts,
         getAllProducts,
+
         getAllProductsFilter,
       }}
     >

@@ -69,11 +69,14 @@ export default function ProductCard({ productInfo }) {
             </button>
           </div>
         </div>
-        {priceAfterDiscount && (
-          <span className="bg-red-600 absolute top-3 left-3 text-white text-xs rounded-md px-2 py-1">
-            -{calcDiscount({ price, priceAfterDiscount })}%
-          </span>
-        )}
+        {priceAfterDiscount &&
+          priceAfterDiscount < price &&
+          calcDiscount({ price, priceAfterDiscount }) > 0 && (
+            <span className="bg-red-600 absolute top-3 left-3 text-white text-xs rounded-md px-2 py-1">
+              -{calcDiscount({ price, priceAfterDiscount })}%
+            </span>
+          )}
+
         <div className="absolute top-3 right-3 bg-white p-2 flex flex-col space-y-5 shadow-md *:hover:text-primary-600 *:transition-colors *:duration-500 *:cursor-pointer">
           <FontAwesomeIcon icon={faHeart} />
           <FontAwesomeIcon icon={faRotate} />

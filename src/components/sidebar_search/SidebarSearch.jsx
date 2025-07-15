@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { categoriesContext } from "../../context/Categories.context";
 import { useFormik } from "formik";
-import Slider from "rc-slider"; 
+import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { brandsContext } from "../../context/Brands.context";
 import ProductRating from "../product_rating/ProductRating";
@@ -11,18 +11,9 @@ export default function SidebarSearch() {
   const { categories } = useContext(categoriesContext);
   const { brands } = useContext(brandsContext);
 
-  const formik = useFormik({
-    initialValues: {
-      category: "",
-      brand: "",
-      priceRange: [130, 9000],
-    },
-    onSubmit: filterProducts,
-  });
-
   return (
     <div className="bg-white p-5 rounded-md">
-      <form onSubmit={formik.handleSubmit}>
+      <form>
         <div>
           <h3 className="text-lg font-semibold mb-2">Categories</h3>
           {categories &&
@@ -31,9 +22,6 @@ export default function SidebarSearch() {
                 <label className="flex items-center space-x-2 mb-2 text-gray-700">
                   <input
                     type="checkbox"
-                    name="category"
-                    onChange={formik.handleChange}
-                    value={cat._id}
                     className="form-checkbox h-4 w-4 text-primary-600"
                   />
                   <span className="text-md">{cat.name}</span>
@@ -47,25 +35,33 @@ export default function SidebarSearch() {
 
           <Slider
             range
-            min={0}
-            max={10000}
+            min={5}
+            max={75}
             allowCross={false}
-            value={formik.values.priceRange}
-            onChange={(value) => formik.setFieldValue("priceRange", value)}
             trackStyle={[{ backgroundColor: "#16a34a", height: 6 }]}
             handleStyle={[
-              { borderColor: "#aaa", height: 18, width: 18, opacity: 1 },
-              { borderColor: "#aaa", height: 18, width: 18, opacity: 1 },
+              {
+                borderColor: "#aaa",
+                height: 18,
+                width: 18,
+                opacity: 1,
+              },
+              {
+                borderColor: "#aaa",
+                height: 18,
+                width: 18,
+                opacity: 1,
+              },
             ]}
             railStyle={{ backgroundColor: "#e5e7eb", height: 6 }}
           />
           <div className="flex items-center justify-between text-sm text-gray-700 mt-2">
             <span className="border border-gray-400 px-3 py-1 rounded-md">
-              {formik.values.priceRange[0]} EGP
+              5 EGP
             </span>
             <span>to</span>
             <span className="border border-gray-400 px-3 py-1 rounded-md">
-              {formik.values.priceRange[1]} EGP
+              75 EGP
             </span>
           </div>
         </div>
@@ -78,9 +74,6 @@ export default function SidebarSearch() {
                 <label className="flex items-center space-x-2 mb-2 text-gray-700">
                   <input
                     type="checkbox"
-                    name="brand"
-                    onChange={formik.handleChange}
-                    value={brand._id}
                     className="form-checkbox h-4 w-4 text-primary-600"
                   />
                   <span className="text-md">{brand.name}</span>
@@ -94,8 +87,6 @@ export default function SidebarSearch() {
           <label className="flex items-center space-x-2 mb-2 text-gray-700">
             <input
               type="checkbox"
-              name="category"
-              onChange={formik.handleChange}
               className="form-checkbox h-4 w-4 text-primary-600"
             />
             <span className="text-md flex  gap-x-2">
@@ -105,7 +96,6 @@ export default function SidebarSearch() {
           <label className="flex items-center space-x-2 mb-2 text-gray-700">
             <input
               type="checkbox"
-              onChange={formik.handleChange}
               className="form-checkbox h-4 w-4 text-primary-600"
             />
             <span className="text-md flex  gap-x-2">
@@ -115,8 +105,6 @@ export default function SidebarSearch() {
           <label className="flex items-center space-x-2 mb-2 text-gray-700">
             <input
               type="checkbox"
-              name="category"
-              onChange={formik.handleChange}
               className="form-checkbox h-4 w-4 text-primary-600"
             />
             <span className="text-md flex  gap-x-2">
@@ -130,8 +118,6 @@ export default function SidebarSearch() {
           <label className="flex items-center space-x-2 mb-2 text-gray-700">
             <input
               type="checkbox"
-              name="category"
-              onChange={formik.handleChange}
               className="form-checkbox h-4 w-4 text-primary-600"
             />
             <span className="text-md flex  gap-x-2">In stock (42)</span>
@@ -139,8 +125,6 @@ export default function SidebarSearch() {
           <label className="flex items-center space-x-2 mb-2 text-gray-700">
             <input
               type="checkbox"
-              name="category"
-              onChange={formik.handleChange}
               className="form-checkbox h-4 w-4 text-primary-600"
             />
             <span className="text-md flex  gap-x-2">Out of stock (42)</span>
@@ -152,7 +136,6 @@ export default function SidebarSearch() {
           <label className="flex items-center space-x-2 mb-2 text-gray-700">
             <input
               type="checkbox"
-              onChange={formik.handleChange}
               className="form-checkbox h-4 w-4 text-primary-600"
             />
             <span className="text-md flex  gap-x-2">100% organic (42)</span>
@@ -160,8 +143,6 @@ export default function SidebarSearch() {
           <label className="flex items-center space-x-2 mb-2 text-gray-700">
             <input
               type="checkbox"
-              name="category"
-              onChange={formik.handleChange}
               className="form-checkbox h-4 w-4 text-primary-600"
             />
             <span className="text-md flex  gap-x-2">Vegan (42)</span>
@@ -169,8 +150,6 @@ export default function SidebarSearch() {
           <label className="flex items-center space-x-2 mb-2 text-gray-700">
             <input
               type="checkbox"
-              name="category"
-              onChange={formik.handleChange}
               className="form-checkbox h-4 w-4 text-primary-600"
             />
             <span className="text-md flex  gap-x-2">Gluten-free (42)</span>
@@ -178,8 +157,6 @@ export default function SidebarSearch() {
           <label className="flex items-center space-x-2 mb-2 text-gray-700">
             <input
               type="checkbox"
-              name="category"
-              onChange={formik.handleChange}
               className="form-checkbox h-4 w-4 text-primary-600"
             />
             <span className="text-md flex  gap-x-2">Non-GMO (42)</span>

@@ -233,7 +233,10 @@ export default function Navbar() {
                             key={category._id}
                             className="border-b border-gray-200"
                           >
-                            <Link to="/" className="flex px-4 py-3 ">
+                            <Link
+                              to={`/search-products?category=${category._id}`}
+                              className="flex px-4 py-3"
+                            >
                               <img
                                 src={category.image}
                                 className="size-3 me-2 mt-1"
@@ -285,6 +288,22 @@ export default function Navbar() {
                 <Link aria-current="page" className="block mt-2">
                   Offers
                 </Link>
+              </li>
+              <li>
+                <NavLink
+                  to="/categories"
+                  className={({ isActive }) => {
+                    return `${
+                      isActive
+                        ? " text-primary-600 flex flex-col mt-2"
+                        : "text-black flex flex-col mt-2"
+                    } 
+                    `;
+                  }}
+                  aria-current="page"
+                >
+                  categories
+                </NavLink>
               </li>
               <li>
                 <Link aria-current="page" className="block mt-2">

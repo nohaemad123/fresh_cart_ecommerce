@@ -30,17 +30,22 @@ export default function HomeCategories() {
           <div className="grid grid-cols-2  lg:grid-cols-6 gap-5 mt-10">
             {categories &&
               categories.map((category) => (
-                <div
-                  key={category._id}
-                  className="bg-white shadow-sm hover:shadow-lg transition-shadow duration-500 py-3 px-5 rounded-lg flex flex-col items-center justify-center space-y-3"
+                <Link
+                  to={`/search-products?category=${category._id}`}
+                  className=" block w-full"
                 >
-                  <img
-                    src={category.image}
-                    alt=""
-                    className="size-15 rounded-full object-cover"
-                  />
-                  <h4 className="">{category.name}</h4>
-                </div>
+                  <div
+                    key={category._id}
+                    className="bg-white shadow-sm hover:shadow-lg transition-shadow duration-500 py-3 px-5 rounded-lg flex flex-col items-center justify-center space-y-3"
+                  >
+                    <img
+                      src={category.image}
+                      alt=""
+                      className="size-15 rounded-full object-cover"
+                    />
+                    <h4 className="text-center">{category.name}</h4>
+                  </div>
+                </Link>
               ))}
           </div>
         </div>

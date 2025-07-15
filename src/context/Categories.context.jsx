@@ -1,10 +1,14 @@
 import { createContext, useEffect, useState } from "react";
-import { getAllCategoriesApi } from "../services/categories-service";
+import {
+  getAllCategoriesApi,
+  getSubCategoryByCategoryApi,
+} from "../services/categories-service";
 
 export const categoriesContext = createContext(null); // لاحظ أول حرف كابيتال
 
 export default function CategoriesProvider({ children }) {
   const [categories, setCategories] = useState(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(false);

@@ -57,7 +57,9 @@ export default function Footer() {
                 {categories &&
                   categories.map((category) => (
                     <li key={category._id}>
-                      <Link>{category.name}</Link>
+                      <Link to={`/search-products?category=${category._id}`}>
+                        {category.name}
+                      </Link>
                     </li>
                   ))}
               </ul>
