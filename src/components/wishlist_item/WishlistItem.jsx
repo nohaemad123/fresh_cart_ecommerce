@@ -16,8 +16,8 @@ export default function WishlistItem({ productInfo }) {
 
   return (
     <>
-      <div className="flex justify-between items-center  mb-5 border-b border-gray-300 pb-5 ">
-        <div className="flex items-center gap-5">
+      <div className="flex justify-between items-center  mb-5 border-b border-gray-300 pb-5 gap-x-10">
+        <div className="flex items-center gap-5 ">
           <img
             src={productInfo.imageCover}
             className="size-20 rounded-lg border border-gray-200 p-1"
@@ -28,7 +28,7 @@ export default function WishlistItem({ productInfo }) {
               {productInfo.category.name}
             </h4>
             <Link to={`/product-details/${productInfo._id}`}>
-              <h3 className="text-base font-medium hover:text-primary-600 transition-colors duration-500">
+              <h3 className="text-base font-medium hover:text-primary-600 transition-colors duration-500 text-wrap">
                 {productInfo.title}
               </h3>
             </Link>

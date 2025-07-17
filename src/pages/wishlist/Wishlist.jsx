@@ -13,6 +13,7 @@ import Loading from "../../components/loading/Loading";
 import EmptyWishlist from "../../components/empty_wishlist/EmptyWishlist";
 import { Link } from "react-router";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import MyWishlist from "../../components/my_wishlist/MyWishlist";
 
 export default function Wishlist() {
   const { wishlistProducts, isLoading } = useContext(wishlistContext);
@@ -43,36 +44,8 @@ export default function Wishlist() {
                   </div>
                 </div>
               </div>
-              <div className="px-10 py-5">
-                {!wishlistProducts.length && <EmptyWishlist />}
-
-                {wishlistProducts &&
-                  wishlistProducts.map((product) => (
-                    <>
-                      <WishlistItem productInfo={product} />
-                    </>
-                  ))}
-                {wishlistProducts.length > 0 && (
-                  <div className="flex justify-center items-center mt-10">
-                    <ul className="flex gap-x-3">
-                      <li className="cursor-pointer font-semibold text-sm size-7 border border-gray-300 flex justify-center items-center text-gray-600 rounded-md">
-                        <FontAwesomeIcon icon={faChevronLeft} />
-                      </li>
-                      <li className="cursor-pointer font-semibold text-sm size-7 bg-primary-600 flex justify-center items-center text-white rounded-md">
-                        1
-                      </li>
-                      <li className="cursor-pointer font-semibold text-sm size-7  border border-gray-300 flex justify-center items-center text-gray-600 rounded-md">
-                        2
-                      </li>
-                      <li className="cursor-pointer font-semibold text-sm size-7  border border-gray-300 flex justify-center items-center text-gray-600 rounded-md">
-                        3
-                      </li>
-                      <li className="cursor-pointer font-semibold text-sm size-7 border border-gray-300 flex justify-center items-center text-gray-600 rounded-md">
-                        <FontAwesomeIcon icon={faChevronRight} />
-                      </li>
-                    </ul>
-                  </div>
-                )}
+              <div className="px-10">
+                <MyWishlist />
               </div>
             </div>
             <div className="md:col-span-3 ">

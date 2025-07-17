@@ -28,6 +28,8 @@ import SubCategoriesProvider from "./context/subCategories.context";
 import Brands from "./pages/brands/Brands";
 import WishlistProvider from "./context/Wishlist.context";
 import Wishlist from "./pages/wishlist/Wishlist";
+import AccountWishlist from "./pages/account_wishlist/AccountWishlist";
+import AccountDetails from "./pages/account_details/AccountDetails";
 
 function App() {
   let routes = createBrowserRouter([
@@ -117,6 +119,14 @@ function App() {
             {
               path: "order-details/:id",
               element: <OrderDetails />,
+            },
+            {
+              path: "my-wishlist",
+              element: <AccountWishlist />,
+            },
+            {
+              path: "account-details",
+              element: <AccountDetails />,
             },
           ],
         },

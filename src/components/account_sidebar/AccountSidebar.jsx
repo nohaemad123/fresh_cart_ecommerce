@@ -8,6 +8,7 @@ import {
   faHeart,
   faLocationDot,
   faLocationPin,
+  faLock,
   faMapLocation,
   faRightFromBracket,
   faUser,
@@ -71,7 +72,7 @@ export default function AccountSidebar() {
                 }  items-center px-3 py-2 flex rounded-md
                     `;
               }}
-              to="/"
+              to="/account/my-wishlist"
             >
               <FontAwesomeIcon icon={faHeart} className="me-4" /> Wishlist
             </NavLink>
@@ -118,10 +119,25 @@ export default function AccountSidebar() {
                 }  items-center px-3 py-2 flex rounded-md
                     `;
               }}
-              to="/"
+              to="/account/account-details"
             >
               <FontAwesomeIcon icon={faUserPen} className="me-4" /> Account
               details
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={({ isActive }) => {
+                return `${
+                  isActive
+                    ? " text-primary-600 flex py-2 bg-primary-100"
+                    : "text-gray-500 flex gap-2 "
+                }  items-center px-3 py-2 flex rounded-md
+                    `;
+              }}
+              to="/"
+            >
+              <FontAwesomeIcon icon={faLock} className="me-4" /> Change password
             </NavLink>
           </li>
           <li>
