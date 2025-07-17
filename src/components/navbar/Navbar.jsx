@@ -96,10 +96,20 @@ export default function Navbar() {
               <div className="links ">
                 <ul className="flex gap-8 items-center">
                   <li>
-                    <Link className="flex flex-col gap-2">
+                    <NavLink
+                      to={"/wishlist"}
+                      className={({ isActive }) => {
+                        return `${
+                          isActive
+                            ? " text-primary-600 flex flex-col gap-2"
+                            : "text-black flex flex-col gap-2"
+                        } 
+                    `;
+                      }}
+                    >
                       <FontAwesomeIcon className="text-xl" icon={faHeart} />
                       <span className="text-sm">Wishlist</span>
-                    </Link>
+                    </NavLink>
                   </li>
                   {token ? (
                     <>
@@ -126,8 +136,10 @@ export default function Navbar() {
                                   icon={faSpinner}
                                   className="spin"
                                 />
+                              ) : cartProducts?.numOfCartItems ? (
+                                cartProducts?.numOfCartItems
                               ) : (
-                                cartProducts.numOfCartItems
+                                0
                               )}
                             </div>
                           </div>
@@ -246,7 +258,7 @@ export default function Navbar() {
                           </li>
                         ))}
                       <li className="px-4 py-3">
-                        <Link to={"/"} className="">
+                        <Link to="/categories" className="">
                           <FontAwesomeIcon
                             icon={faEllipsis}
                             className="me-1 text-primary-600"

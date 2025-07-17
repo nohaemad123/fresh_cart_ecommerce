@@ -5,11 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
   faRotate,
+  faHeart as solidHeart,
   faShoppingBag,
 } from "@fortawesome/free-solid-svg-icons";
-import { faEye, faHeart } from "@fortawesome/free-regular-svg-icons";
+import {
+  faEye,
+  faHeart as regularHeart,
+} from "@fortawesome/free-regular-svg-icons";
 import { useContext } from "react";
 import { cartContext } from "../../context/Cart.context";
+import { wishlistContext } from "../../context/Wishlist.context";
+import { authContext } from "../../context/Auth.context";
 
 export default function ListProductCard({ productInfo }) {
   const {
@@ -24,6 +30,14 @@ export default function ListProductCard({ productInfo }) {
   } = productInfo;
 
   const { AddProductToCart } = useContext(cartContext);
+  const { AddProductToWishlist, wishlistProducts, DeleteWishlistFromCart } =
+    useContext(wishlistContext);
+  const { token } = useContext(authContext);
+
+  var isExist = false;
+  if (token) {
+    isExist = wishlistProducts.find((product) => _id === product._id);
+  }
 
   return (
     <>
@@ -67,7 +81,26 @@ export default function ListProductCard({ productInfo }) {
               </div>
 
               <div className=" bg-white  flex  items-center space-x-5 *:hover:bg-primary-600 *:hover:text-white *:transition-colors *:duration-500 *:cursor-pointer *:p-2 *:shadow-md ">
-                <FontAwesomeIcon icon={faHeart} />
+                {!isExist ? (
+                  <button
+                    onClick={() => {
+                      AddProductToWishlist(_id);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={regularHeart} />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      DeleteWishlistFromCart(_id);
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={solidHeart}
+                      className="text-red-500"
+                    />
+                  </button>
+                )}
                 <FontAwesomeIcon icon={faRotate} />
                 <Link to={`/product-details/${_id}`}>
                   <FontAwesomeIcon icon={faEye} />

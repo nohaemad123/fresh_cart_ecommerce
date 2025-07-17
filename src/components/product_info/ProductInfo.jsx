@@ -9,9 +9,12 @@ import {
   faCartShopping,
   faTruckFast,
   faRotateLeft,
+  faHeart as solidHeart,
 } from "@fortawesome/free-solid-svg-icons";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import { cartContext } from "../../context/Cart.context";
+import { wishlistContext } from "../../context/Wishlist.context";
+import { authContext } from "../../context/Auth.context";
 
 export default function ProductInfo({ productDetails }) {
   const {
@@ -26,16 +29,28 @@ export default function ProductInfo({ productDetails }) {
     description,
     category,
   } = productDetails;
-  const { DeleteProductFromCart, AddProductToCart, isAdded, cartProducts } =
+  const { DeleteProductFromCart, AddProductToCart, cartProducts } =
     useContext(cartContext);
-
+  const { AddProductToWishlist, wishlistProducts, DeleteWishlistFromCart } =
+    useContext(wishlistContext);
   console.log(cartProducts);
-  const isExist = cartProducts?.data?.products.find(
+
+  const cartItems = cartProducts?.data?.products ?? [];
+
+  const isExistInCart = cartItems.find(
     (product) => _id === product.product._id
   );
 
-  console.log(cartProducts?.data?.products);
-  console.log(isExist);
+  const { token } = useContext(authContext);
+
+  const wishListItems = wishlistProducts ?? [];
+
+  var isExistInWishlist = false;
+  if (token) {
+    {
+      isExistInWishlist = wishListItems.find((product) => _id === product._id);
+    }
+  }
 
   return (
     <>
@@ -68,9 +83,31 @@ export default function ProductInfo({ productDetails }) {
               </span>
 
               <div className="flex gap-x-4">
-                <FontAwesomeIcon icon={faShareNodes} />
-
-                <FontAwesomeIcon icon={faHeart} className="cursor-pointer" />
+                <button>
+                  <FontAwesomeIcon icon={faShareNodes} />
+                </button>
+                {!isExistInWishlist ? (
+                  <button
+                    className="cursor-pointer"
+                    onClick={() => {
+                      AddProductToWishlist(_id);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={regularHeart} />
+                  </button>
+                ) : (
+                  <button
+                    className="cursor-pointer"
+                    onClick={() => {
+                      DeleteWishlistFromCart(_id);
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={solidHeart}
+                      className="text-red-500"
+                    />
+                  </button>
+                )}
               </div>
             </div>
             <div className="space-y-2 mt-4">
@@ -83,22 +120,24 @@ export default function ProductInfo({ productDetails }) {
                 <ProductRating rating={ratingsAverage} />
                 <span className="text-gray-500">{ratingsAverage}</span>
                 <span className="text-gray-500">
-                  ({ratingsQuantity} reviews){" "}
+                  ({ratingsQuantity} reviews)
                 </span>
               </div>
               <div className="flex gap-x-3 items-center">
-                <h3 className="text-primary-600 font-bold text-2xl">
-                  {price} EGP
-                </h3>
                 {priceAfterDiscount ? (
                   <>
+                    <h3 className="text-primary-600 font-bold text-2xl">
+                      {priceAfterDiscount} EGP
+                    </h3>
                     <del className="text-gray-400">{price} EGP</del>
                     <span className="bg-red-200/50 px-2 py-1 rounded-md text-red-600 font-medium">
                       Save {calcDiscount({ price, priceAfterDiscount })}%
                     </span>
                   </>
                 ) : (
-                  ""
+                  <h3 className="text-primary-600 font-bold text-2xl">
+                    {price} EGP
+                  </h3>
                 )}
               </div>
               <div className="border-t border-gray-300 pt-3">
@@ -125,7 +164,7 @@ export default function ProductInfo({ productDetails }) {
                 )}
               </div>
               <div className="grid grid-cols-2 mt-5 space-x-4">
-                {!isExist ? (
+                {!isExistInCart ? (
                   <button
                     onClick={() => {
                       AddProductToCart(_id);

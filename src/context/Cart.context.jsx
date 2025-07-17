@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import {
   addProductToCartApi,
   deleteCartProductsApi,
@@ -8,6 +8,7 @@ import {
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { authContext } from "./Auth.context";
 
 export const cartContext = createContext(null);
 
@@ -18,17 +19,22 @@ export default function CartProvider({ children }) {
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(false);
   const [cartProducts, setCartProducts] = useState(null);
+  const { token } = useContext(authContext);
 
   async function AddProductToCart(id) {
-    try {
-      const response = await addProductToCartApi(id);
-      if (response.success) {
-        toast.success("the product added to cart");
-        getCartProducts();
-        console.log(response);
+    if (token) {
+      try {
+        const response = await addProductToCartApi(id);
+        if (response.success) {
+          toast.success("the product added to cart");
+          getCartProducts();
+          console.log(response);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      toast.error("You must login first");
     }
   }
 
@@ -44,7 +50,7 @@ export default function CartProvider({ children }) {
     } catch (error) {
       console.log(error);
       setIsError(true);
-      isError(error);
+      setError(error);
       setIsLoading(false);
     }
   }
@@ -89,7 +95,7 @@ export default function CartProvider({ children }) {
     } catch (error) {
       console.log(error);
       setIsError(true);
-      isError(error);
+      setError(error);
       setIsLoading(false);
     }
   }

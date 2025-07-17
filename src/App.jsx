@@ -26,6 +26,8 @@ import BrandsProvider from "./context/Brands.context";
 import Categories from "./pages/categories/Categories";
 import SubCategoriesProvider from "./context/subCategories.context";
 import Brands from "./pages/brands/Brands";
+import WishlistProvider from "./context/Wishlist.context";
+import Wishlist from "./pages/wishlist/Wishlist";
 
 function App() {
   let routes = createBrowserRouter([
@@ -88,6 +90,14 @@ function App() {
           ),
         },
         {
+          path: "/wishlist",
+          element: (
+            <ProtectedRoute>
+              <Wishlist />
+            </ProtectedRoute>
+          ),
+        },
+        {
           path: "/product-details/:id",
           element: <ProductDetails />,
         },
@@ -122,21 +132,23 @@ function App() {
       <AuthProvider>
         <OrderProvider>
           <CartProvider>
-            <ProductsProvider>
-              <CategoriesProvider>
-                <SubCategoriesProvider>
-                  <BrandsProvider>
-                    <RouterProvider router={routes} />
-                    <ToastContainer
-                      autoClose={3000}
-                      closeButton={false}
-                      closeOnClick={true}
-                      transition={Slide}
-                    />
-                  </BrandsProvider>
-                </SubCategoriesProvider>
-              </CategoriesProvider>
-            </ProductsProvider>
+            <WishlistProvider>
+              <ProductsProvider>
+                <CategoriesProvider>
+                  <SubCategoriesProvider>
+                    <BrandsProvider>
+                      <RouterProvider router={routes} />
+                      <ToastContainer
+                        autoClose={3000}
+                        closeButton={false}
+                        closeOnClick={true}
+                        transition={Slide}
+                      />
+                    </BrandsProvider>
+                  </SubCategoriesProvider>
+                </CategoriesProvider>
+              </ProductsProvider>
+            </WishlistProvider>
           </CartProvider>
         </OrderProvider>
       </AuthProvider>

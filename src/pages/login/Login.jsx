@@ -40,7 +40,10 @@ export default function Login() {
       console.log(response);
       if (response.success) {
         toast.success("Welcome back");
-        setUserData(response.data.user);
+        localStorage.setItem(
+          "user_details",
+          JSON.stringify(response.data.user)
+        );
         console.log(response.data.user);
         if (values.rememberMe) {
           sessionStorage.setItem("token", response.data.token);

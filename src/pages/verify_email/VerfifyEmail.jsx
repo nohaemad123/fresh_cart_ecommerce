@@ -128,7 +128,7 @@ export default function VerifyEmail() {
               <div className="grid grid-cols-6 gap-x-5 justify-center items-center text-center">
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control text-center"
                   name="digit1"
                   value={formik.values.digit1}
                   onChange={formik.handleChange}
@@ -136,7 +136,7 @@ export default function VerifyEmail() {
                 />
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control text-center"
                   name="digit2"
                   value={formik.values.digit2}
                   onChange={formik.handleChange}
@@ -144,7 +144,7 @@ export default function VerifyEmail() {
                 />
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control text-center"
                   name="digit3"
                   value={formik.values.digit3}
                   onChange={formik.handleChange}
@@ -152,7 +152,7 @@ export default function VerifyEmail() {
                 />
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control text-center"
                   name="digit4"
                   value={formik.values.digit4}
                   onChange={formik.handleChange}
@@ -160,7 +160,7 @@ export default function VerifyEmail() {
                 />
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control text-center"
                   name="digit5"
                   value={formik.values.digit5}
                   onChange={formik.handleChange}
@@ -168,7 +168,7 @@ export default function VerifyEmail() {
                 />
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control text-center"
                   name="digit6"
                   value={formik.values.digit6}
                   onChange={formik.handleChange}

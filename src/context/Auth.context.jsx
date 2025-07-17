@@ -7,7 +7,9 @@ export default function AuthProvider({ children }) {
     localStorage.getItem("token") || sessionStorage.getItem("token")
   );
 
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("user_details")) || null
+  );
 
   function logout() {
     setToken(null);

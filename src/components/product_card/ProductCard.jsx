@@ -1,11 +1,21 @@
-import { faEye, faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faPlus, faRotate } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faHeart as regularHeart,
+} from "@fortawesome/free-regular-svg-icons";
+
+import {
+  faHeart as solidHeart,
+  faPlus,
+  faRotate,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router";
 import { calcDiscount } from "../../utils/calcDiscount.utils";
 import ProductRating from "../product_rating/ProductRating";
 import { useContext } from "react";
 import { cartContext } from "../../context/Cart.context";
+import { wishlistContext } from "../../context/Wishlist.context";
+import { authContext } from "../../context/Auth.context";
 
 export default function ProductCard({ productInfo }) {
   const {
@@ -20,6 +30,14 @@ export default function ProductCard({ productInfo }) {
   } = productInfo;
 
   const { AddProductToCart } = useContext(cartContext);
+  const { AddProductToWishlist, wishlistProducts, DeleteWishlistFromCart } =
+    useContext(wishlistContext);
+  const { token } = useContext(authContext);
+
+  var isExist = false;
+  if (token) {
+    isExist = wishlistProducts.find((product) => _id === product._id);
+  }
   return (
     <>
       <div className="product_card bg-white relative  shadow-lg rounded-xl overflow-hidden">
@@ -78,7 +96,23 @@ export default function ProductCard({ productInfo }) {
           )}
 
         <div className="absolute top-3 right-3 bg-white p-2 flex flex-col space-y-5 shadow-md *:hover:text-primary-600 *:transition-colors *:duration-500 *:cursor-pointer">
-          <FontAwesomeIcon icon={faHeart} />
+          {!isExist ? (
+            <button
+              onClick={() => {
+                AddProductToWishlist(_id);
+              }}
+            >
+              <FontAwesomeIcon icon={regularHeart} />
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                DeleteWishlistFromCart(_id);
+              }}
+            >
+              <FontAwesomeIcon icon={solidHeart} className="text-red-500" />
+            </button>
+          )}
           <FontAwesomeIcon icon={faRotate} />
           <Link to={`/product-details/${_id}`}>
             <FontAwesomeIcon icon={faEye} />
