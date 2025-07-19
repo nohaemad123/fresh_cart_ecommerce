@@ -87,7 +87,7 @@ export default function AccountSidebar() {
                 }  items-center px-3 py-2 flex rounded-md
                     `;
               }}
-              to="/"
+              to="/account/addresses"
             >
               <FontAwesomeIcon icon={faLocationDot} className="me-4" />
               Addresses
@@ -135,7 +135,7 @@ export default function AccountSidebar() {
                 }  items-center px-3 py-2 flex rounded-md
                     `;
               }}
-              to="/"
+              to="/account/change-password"
             >
               <FontAwesomeIcon icon={faLock} className="me-4" /> Change password
             </NavLink>

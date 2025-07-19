@@ -30,6 +30,9 @@ import WishlistProvider from "./context/Wishlist.context";
 import Wishlist from "./pages/wishlist/Wishlist";
 import AccountWishlist from "./pages/account_wishlist/AccountWishlist";
 import AccountDetails from "./pages/account_details/AccountDetails";
+import ChangePassword from "./pages/change_password/ChangePassword";
+import Addresses from "./pages/addresses/Addresses";
+import AddressProvider from "./context/Address.context";
 
 function App() {
   let routes = createBrowserRouter([
@@ -128,6 +131,15 @@ function App() {
               path: "account-details",
               element: <AccountDetails />,
             },
+            {
+              path: "change-password",
+              element: <ChangePassword />,
+            },
+            ,
+            {
+              path: "addresses",
+              element: <Addresses />,
+            },
           ],
         },
         {
@@ -141,25 +153,27 @@ function App() {
     <>
       <AuthProvider>
         <OrderProvider>
-          <CartProvider>
-            <WishlistProvider>
-              <ProductsProvider>
-                <CategoriesProvider>
-                  <SubCategoriesProvider>
-                    <BrandsProvider>
-                      <RouterProvider router={routes} />
-                      <ToastContainer
-                        autoClose={3000}
-                        closeButton={false}
-                        closeOnClick={true}
-                        transition={Slide}
-                      />
-                    </BrandsProvider>
-                  </SubCategoriesProvider>
-                </CategoriesProvider>
-              </ProductsProvider>
-            </WishlistProvider>
-          </CartProvider>
+          <AddressProvider>
+            <CartProvider>
+              <WishlistProvider>
+                <ProductsProvider>
+                  <CategoriesProvider>
+                    <SubCategoriesProvider>
+                      <BrandsProvider>
+                        <RouterProvider router={routes} />
+                        <ToastContainer
+                          autoClose={3000}
+                          closeButton={false}
+                          closeOnClick={true}
+                          transition={Slide}
+                        />
+                      </BrandsProvider>
+                    </SubCategoriesProvider>
+                  </CategoriesProvider>
+                </ProductsProvider>
+              </WishlistProvider>
+            </CartProvider>
+          </AddressProvider>
         </OrderProvider>
       </AuthProvider>
     </>

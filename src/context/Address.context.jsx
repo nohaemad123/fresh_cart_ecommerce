@@ -1,19 +1,20 @@
 import { createContext, useEffect, useState } from "react";
-import { getAllCategoriesApi } from "../services/categories-service";
-import { getAllBrandsApi } from "../services/brands-service";
+import { getAllAddressesApi } from "../services/address-service";
 
-export const brandsContext = createContext(null);
+export const addressContext = createContext(null);
 
-export default function BrandsProvider({ children }) {
-  const [brands, setBrands] = useState(null);
+export default function AddressProvider({ children }) {
+  const [addresses, setAddresses] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(false);
 
-  async function getAllBrands() {
+  async function getAllAddresses() {
     try {
       setIsLoading(true);
-      const response = await getAllBrandsApi();
+      const response = await getAllAddressesApi();
+      console.log(response);
+
       if (response.success) {
         setBrands(response.data.data);
       }
@@ -26,12 +27,12 @@ export default function BrandsProvider({ children }) {
   }
 
   useEffect(() => {
-    getAllBrands();
+    getAllAddresses();
   }, []);
 
   return (
-    <brandsContext.Provider value={{ brands, isLoading, isError, error }}>
+    <addressContext.Provider value={{ addresses, isLoading }}>
       {children}
-    </brandsContext.Provider>
+    </addressContext.Provider>
   );
 }

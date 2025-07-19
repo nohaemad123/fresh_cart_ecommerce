@@ -82,3 +82,33 @@ export async function resetPassword(values) {
     throw error;
   }
 }
+
+export async function updateUserData(values) {
+  try {
+    const options = {
+      method: "PUT",
+      url: "users/updateMe",
+      data: values,
+    };
+
+    const response = await apiClient.request(options);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function changePassword(values) {
+  try {
+    const options = {
+      method: "PUT",
+      url: "users/changeMyPassword",
+      data: values,
+    };
+
+    const response = await apiClient.request(options);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}

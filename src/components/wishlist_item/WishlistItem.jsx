@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import ProductRating from "../product_rating/ProductRating";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { wishlistContext } from "../../context/Wishlist.context";
 import { cartContext } from "../../context/Cart.context";
 import { useContext } from "react";

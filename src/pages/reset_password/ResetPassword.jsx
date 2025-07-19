@@ -79,7 +79,7 @@ export default function ResetPassword() {
       const response = await resetPassword(values);
       if (response.success) {
         toast.success("password is reseed, please login to continue shopping");
-          setTimeout(() => {
+        setTimeout(() => {
           navigate("/login");
         }, 3000);
       } else {
