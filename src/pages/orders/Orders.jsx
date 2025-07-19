@@ -33,9 +33,9 @@ export default function Orders() {
           </div>
         </div>
       </div>
-      {orders?.data.map((order) => (
+      {/* {orders?.data.map((order) => (
         <OrderItem orderInfo={order} />
-      ))}
+      ))} */}
 
       <div className="flex justify-between items-center">
         <p>Showing 1-4 of 12 orders</p>
