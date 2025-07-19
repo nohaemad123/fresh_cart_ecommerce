@@ -34,15 +34,16 @@ export default function AccountSidebar() {
         <ul className="mt-5 flex flex-col space-y-1">
           <li>
             <NavLink
+              end
               className={({ isActive }) => {
                 return `${
                   isActive
                     ? " text-primary-600 flex py-2 bg-primary-100"
                     : "text-gray-500 flex gap-2 "
                 }  items-center px-3 py-2 flex rounded-md
-                    `;
+        `;
               }}
-              to="/"
+              to="/account"
             >
               <FontAwesomeIcon icon={faDashboard} className="me-4" /> Dashboard
             </NavLink>
@@ -103,7 +104,7 @@ export default function AccountSidebar() {
                 }  items-center px-3 py-2 flex rounded-md
                     `;
               }}
-              to="/"
+              to="/account/payment-methods"
             >
               <FontAwesomeIcon icon={faCreditCard} className="me-4" /> Payment
               methods

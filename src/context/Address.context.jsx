@@ -1,7 +1,15 @@
 import { createContext, useEffect, useState } from "react";
-import { getAllAddressesApi } from "../services/address-service";
+import {
+  addAddressApi,
+  deleteAddressApi,
+  getAllAddressesApi,
+} from "../services/address-service";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 export const addressContext = createContext(null);
+const MySwal = withReactContent(Swal);
 
 export default function AddressProvider({ children }) {
   const [addresses, setAddresses] = useState(null);
@@ -16,7 +24,7 @@ export default function AddressProvider({ children }) {
       console.log(response);
 
       if (response.success) {
-        setBrands(response.data.data);
+        setAddresses(response.data.data);
       }
     } catch (error) {
       setIsError(true);
@@ -26,12 +34,56 @@ export default function AddressProvider({ children }) {
     }
   }
 
+  async function AddAddressFunction(values) {
+    try {
+      const response = await addAddressApi(values);
+      if (response.success) {
+        toast.success("The address is added successfully");
+        getAllAddresses();
+      } else {
+        toast.error(response.message || "Failed to add address");
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }
+  }
+
+  async function DeleteAddress(id) {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure want delete address?",
+        text: "if click on delete the address will removed",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#f00",
+        cancelButtonColor: "#aaa",
+        confirmButtonText: "Yes, delete it!",
+      });
+      if (result.isConfirmed) {
+        const response = await deleteAddressApi(id);
+        if (response.success) {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your address has been deleted successfully.",
+            icon: "success",
+          });
+          getAllAddresses();
+          console.log(response);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     getAllAddresses();
   }, []);
 
   return (
-    <addressContext.Provider value={{ addresses, isLoading }}>
+    <addressContext.Provider
+      value={{ addresses, isLoading, AddAddressFunction, DeleteAddress }}
+    >
       {children}
     </addressContext.Provider>
   );

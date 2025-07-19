@@ -157,7 +157,7 @@ export default function ProductInfo({ productDetails }) {
                 </div>
                 {quantity > 0 ? (
                   <h3 className=" ms-4 text-sm">
-                    Only 12 items left in stock{" "}
+                    Only {quantity} items left in stock{" "}
                   </h3>
                 ) : (
                   ""

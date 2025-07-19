@@ -28,3 +28,17 @@ export async function addAddressApi(values) {
     throw error;
   }
 }
+
+export async function deleteAddressApi(address_id) {
+  try {
+    const options = {
+      method: "DELETE",
+      url: `addresses/${address_id}`,
+    };
+
+    const response = await apiClient.request(options);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}

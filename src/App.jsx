@@ -33,6 +33,8 @@ import AccountDetails from "./pages/account_details/AccountDetails";
 import ChangePassword from "./pages/change_password/ChangePassword";
 import Addresses from "./pages/addresses/Addresses";
 import AddressProvider from "./context/Address.context";
+import PaymentMethods from "./pages/payment_methods/PaymentMethods";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 function App() {
   let routes = createBrowserRouter([
@@ -108,13 +110,16 @@ function App() {
         },
         {
           path: "/account",
-
           element: (
             <ProtectedRoute>
-              <AccountLayout />,
+              <AccountLayout />
             </ProtectedRoute>
           ),
           children: [
+            {
+              index: true, // دي بدل path: "/"
+              element: <Dashboard />,
+            },
             {
               path: "orders",
               element: <Orders />,
@@ -135,13 +140,17 @@ function App() {
               path: "change-password",
               element: <ChangePassword />,
             },
-            ,
             {
               path: "addresses",
               element: <Addresses />,
             },
+            {
+              path: "payment-methods",
+              element: <PaymentMethods />,
+            },
           ],
         },
+
         {
           path: "*",
           element: <NotFound />,

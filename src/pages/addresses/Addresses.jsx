@@ -21,10 +21,11 @@ export default function Addresses() {
           Add new address
         </button>
       </div>
-      {!addresses && <EmptyAddress />}
+      {!addresses.length && <EmptyAddress />}
 
-      <div className="grid grid-cols-3">
-        {addresses && addresses.map((address) => <AddressCard />)}
+      <div className="grid grid-cols-2 mt-5 gap-10">
+        {addresses &&
+          addresses.map((address) => <AddressCard addressInfo={address} />)}
       </div>
       <div className="mt-5">{isAction == "add" && <AddAddress />}</div>
     </>
