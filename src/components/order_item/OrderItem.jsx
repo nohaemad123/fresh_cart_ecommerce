@@ -51,7 +51,7 @@ export default function OrderItem({ orderInfo }) {
         <div className="flex p-2 flex-col lg:flex-row justify-between gap-x-3">
           <div className="flex gap-x-3 border-r border-gray-300 pr-5 flex-wrap">
             {cartItems.map((item) => (
-              <div className="relative rounded-md">
+              <div className="relative rounded-md" key={item.product._id}>
                 <img
                   src={item.product.imageCover}
                   className="w-12 h-12 min-w-[50px] min-h-[50px] object-cover rounded-lg border border-gray-200 p-1"

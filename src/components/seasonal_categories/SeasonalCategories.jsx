@@ -1,7 +1,7 @@
 import React from "react";
 import CategoryCard from "../category_card/CategoryCard";
 import { useCategories } from "../../hooks/useCategories";
-import Loading from "../loading/Loading";
+
 import SeasonalCategoriesSkeleton from "../../skeleton/SeasonalCategoriesSkeleton";
 
 export default function SeasonalCategories() {

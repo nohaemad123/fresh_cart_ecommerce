@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Loading from "../loading/Loading";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,

@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import WishlistItem from "../wishlist_item/WishlistItem";
 import EmptyWishlist from "../empty_wishlist/EmptyWishlist";
-import Loading from "../loading/Loading";
+
 import { useWishlist } from "../../hooks/useWishlist";
 import MyWishlistSkeleton from "../../skeleton/MyWishlistSkeleton";
 

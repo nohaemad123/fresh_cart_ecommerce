@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import Loading from "../../components/loading/Loading";
+
 import AddressCard from "../../components/address_card/AddressCard";
 import EmptyAddress from "../../components/empty_address/EmptyAddress";
 import AddAddress from "../../components/add_address/AddAddress";

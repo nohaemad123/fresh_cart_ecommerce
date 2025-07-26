@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getProductDetailsById } from "../../services/products-service";
 import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
-import Loading from "../../components/loading/Loading";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";

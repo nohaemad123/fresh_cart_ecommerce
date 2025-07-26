@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Loading from "../loading/Loading";
+
 import { Link } from "react-router";
 import FeaturedBrandCard from "../featured_brand_card/FeaturedBrandCard";
 import { useBrands } from "../../hooks/useBrands";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getSubCategoryByCategoryApi } from "../../services/categories-service";
 import { Link } from "react-router";
-import Loading from "../loading/Loading";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 

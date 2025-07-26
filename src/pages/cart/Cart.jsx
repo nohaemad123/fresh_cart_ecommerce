@@ -1,6 +1,6 @@
 import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import CartItem from "../../components/cart_item/CartItem";
-import Loading from "../../components/loading/Loading";
+
 import EmptyCart from "../../components/empty_cart/EmptCart";
 import { useCart } from "../../hooks/useCart";
 import { useUpdateProductCount } from "../../hooks/useUpdateProductCount";

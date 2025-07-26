@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import OrderItem from "../../components/order_item/OrderItem";
-import Loading from "../../components/loading/Loading";
+
 import { useOrders } from "../../hooks/useOrders";
 import OrdersSkeleton from "../../skeleton/OrdersSkeleton";
 

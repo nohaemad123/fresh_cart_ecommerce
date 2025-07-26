@@ -9,7 +9,7 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import WishlistItem from "../../components/wishlist_item/WishlistItem";
-import Loading from "../../components/loading/Loading";
+
 import EmptyWishlist from "../../components/empty_wishlist/EmptyWishlist";
 import { Link } from "react-router";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";

@@ -3,7 +3,7 @@ import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CategoryCard from "../../components/category_card/CategoryCard";
-import Loading from "../../components/loading/Loading";
+
 import ListCategoryCard from "../../components/list_category_card/ListCategoryCard";
 import Subcategories from "../../components/subcategories/Subcategories";
 import FeaturedCategories from "../../components/featured_categories/FeaturedCategories";

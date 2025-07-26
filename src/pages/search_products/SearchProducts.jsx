@@ -4,7 +4,7 @@ import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import ProductCard from "../../components/product_card/ProductCard";
 import ListProductCard from "../../components/list_product_card/ListProductCard";
 import SidebarSearch from "../../components/sidebar_search/SidebarSearch";
-import Loading from "../../components/loading/Loading";
+
 import NoProducts from "../../components/no_products/NoProducts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

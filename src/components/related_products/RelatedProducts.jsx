@@ -5,7 +5,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { getAllProductsApi } from "../../services/products-service";
-import Loading from "../loading/Loading";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCard from "../product_card/ProductCard";
 import { Navigation } from "swiper/modules";

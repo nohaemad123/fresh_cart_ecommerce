@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router";
 import ProductCard from "../product_card/ProductCard";
-import Loading from "../loading/Loading";
 
 import { calcTimeLeft } from "../../utils/counterDown";
 import { useProduct } from "../../hooks/useProduct";

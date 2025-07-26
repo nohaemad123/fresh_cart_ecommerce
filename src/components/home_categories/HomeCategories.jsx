@@ -2,7 +2,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { Link } from "react-router";
-import Loading from "../loading/Loading";
+
 import { useCategories } from "../../hooks/useCategories";
 import HomeCategoriesSkeleton from "../../skeleton/homeCategoriesSkeleton";
 

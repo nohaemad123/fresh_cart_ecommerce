@@ -20,9 +20,9 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 
-import Loading from "../../components/loading/Loading";
 import { paymentCheckout } from "../../services/payment-service";
 import { useQueryClient } from "@tanstack/react-query";
+import CheckoutSkeleton from "../../skeleton/CheckoutSkeleton";
 
 export default function Checkout() {
   const { cartProducts, cartId, isLoading, totalCartPrice } = useCart();
@@ -89,7 +89,7 @@ export default function Checkout() {
     formik.setFieldValue("paymentMethod", event);
   }
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <CheckoutSkeleton />;
   return (
     <>
       <BreadCrumb thirdLink={"Checkout"} />

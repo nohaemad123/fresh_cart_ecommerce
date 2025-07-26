@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import Loading from "../loading/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShirt } from "@fortawesome/free-solid-svg-icons";
 import { useSubCategories } from "../../hooks/useSubcategories";
+import PopularSubcategoriesSkeleton from "../../skeleton/PopularSubCategoriesSkeleton";
 
 export default function Subcategories() {
   const { subCategories, isLoading } = useSubCategories();
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <PopularSubcategoriesSkeleton />;
 
   return (
     <>

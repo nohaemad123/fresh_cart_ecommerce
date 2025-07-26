@@ -1,7 +1,6 @@
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router";
-import Loading from "../loading/Loading";
 import { useContext } from "react";
 import ProductCard from "../product_card/ProductCard";
 import { useProduct } from "../../hooks/useProduct";

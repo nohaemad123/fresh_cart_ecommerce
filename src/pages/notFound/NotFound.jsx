@@ -13,17 +13,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NewsLetter from "../../components/newsletter/NewsLetter";
 import { Link } from "react-router";
 import { getAllCategoriesApi } from "../../services/categories-service";
-import Loading from "../../components/loading/Loading";
+
 import error_404 from "../../assets/undraw_page-not-found_6wni.svg";
 import { useCategories } from "../../hooks/useCategories";
 
 export default function NotFound() {
-  const { categories, isLoading } = useCategories();
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <>
       <BreadCrumb thirdLink={"404 error"} bg_gray={"bg-gray-300/30"} />
@@ -54,27 +48,7 @@ export default function NotFound() {
                 search for products
               </Link>
             </div>
-            <div className="mt-6">
-              <h3 className="text-xl font-semibold text-center">
-                To explore our popular categories
-              </h3>
 
-              <div className="grid grid-cols-4 mt-4 gap-3 text-center justify-center items-center">
-                {categories &&
-                  categories.map((category) => (
-                    <div key={category._id}>
-                      <div className="bg-white shadow-sm hover:shadow-lg transition-shadow duration-500 py-3 px-5 rounded-lg flex flex-col items-center justify-center space-y-3">
-                        <img
-                          src={category.image}
-                          alt=""
-                          className="size-15 rounded-full object-cover mb-3"
-                        />
-                        <h4 className="">{category.name}</h4>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
             <div className="bg-primary-100/50 py-5 px-10 flex flex-col space-y-3 justify-center items-center mt-3">
               <h3 className="text-2xl font-medium ">Need help?</h3>
               <p className="text-gray-500">

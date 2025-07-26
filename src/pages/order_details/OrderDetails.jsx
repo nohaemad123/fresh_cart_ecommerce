@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Loading from "../../components/loading/Loading";
+
 import { getOrderByIdApi } from "../../services/orders-service";
 import { Link, useParams } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
